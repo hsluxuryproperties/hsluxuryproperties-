@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property | Haigh Spanoudakis Real Estate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F0C040;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark-2: #1A1A1A;
+    --dark-3: #222222;
+    --text-muted: #888888;
+    --white: #F5F0E8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 80px;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212,160,23,0.2);
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-img {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--gold-light);
+    box-shadow: 0 0 12px rgba(212,160,23,0.35);
+    display: block;
+    background: #000;
+  }
+
+  .nav-brand-text { display: flex; flex-direction: column; gap: 1px; }
+
+  .nav-brand-hs {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #C8A84B;
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  .nav-brand-full {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; }
+
+  .nav-links a {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #DDDDDD;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold-light);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* PROPERTY PAGE */
+  .property-page { padding-top: 80px; }
+
+  /* Hero gallery */
+  .gallery {
+    height: 60vh;
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+    background: var(--dark-3);
+    display: flex;
+  }
+
+  .gallery-main {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #161616 0%, #1e1e1e 50%, #161616 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-placeholder-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    font-weight: 600;
+    color: rgba(212,160,23,0.12);
+    letter-spacing: -4px;
+  }
+
+  .gallery-thumbs {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
+    background: var(--black);
+    padding: 4px;
+  }
+
+  .gallery-thumb {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+
+  .gallery-thumb.active,
+  .gallery-thumb:hover { opacity: 1; }
+
+  .gallery-overlay-tag {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold-light);
+    padding: 6px 14px;
+    font-weight: 500;
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 24px 60px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    background: var(--dark);
+    border-bottom: 1px solid rgba(212,160,23,0.08);
+    transition: color 0.3s;
+    width: 100%;
+  }
+
+  .back-link:hover { color: var(--gold-light); }
+  .back-link::before { content: '←'; }
+
+  /* Content layout */
+  .property-content {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 0;
+    background: var(--dark);
+  }
+
+  .property-main {
+    padding: 60px 60px 80px;
+    border-right: 1px solid rgba(212,160,23,0.08);
+  }
+
+  .prop-tag {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .prop-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .prop-location {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+
+  .gold-line { width: 40px; height: 1px; background: var(--gold-light); margin-bottom: 40px; }
+
+  .prop-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+  }
+
+  /* Stats */
+  .prop-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(212,160,23,0.1);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--white);
+    font-weight: 300;
+  }
+
+  /* Description */
+  .prop-desc-title {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 16px;
+  }
+
+  .prop-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.9;
+    margin-bottom: 40px;
+    white-space: pre-wrap;
+  }
+
+  /* Features */
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-light);
+    letter-spacing: 0.5px;
+  }
+
+  .feature-item::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--gold-light);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* Sidebar */
+  .property-sidebar {
+    padding: 60px 40px;
+    background: var(--dark-2);
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+  }
+
+  .sidebar-title {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 28px;
+  }
+
+  .enquiry-form { display: flex; flex-direction: column; gap: 16px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+  .form-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); }
+
+  .form-input, .form-textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212,160,23,0.18);
+    color: var(--white);
+    padding: 12px 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+
+  .form-input:focus, .form-textarea:focus { border-color: rgba(212,160,23,0.5); }
+  .form-textarea { min-height: 100px; resize: vertical; }
+
+  .enquire-btn {
+    padding: 16px;
+    background: transparent;
+    border: 1px solid var(--gold-light);
+    color: var(--gold-light);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .enquire-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+
+  .enquire-btn:hover { color: var(--black); }
+  .enquire-btn:hover::before { transform: translateX(0); }
+  .enquire-btn span { position: relative; z-index: 1; }
+
+  .divider-or {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .divider-or::before,
+  .divider-or::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(212,160,23,0.1);
+  }
+
+  .contact-direct {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .contact-direct a {
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+
+  /* Not found */
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: 60px;
+  }
+
+  .not-found h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  .not-found p { font-size: 13px; color: rgba(136,136,136,0.5); margin-bottom: 32px; letter-spacing: 1px; }
+
+  .not-found a {
+    padding: 14px 32px;
+    border: 1px solid rgba(212,160,23,0.35);
+    color: var(--gold-light);
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .not-found a:hover { background: rgba(212,160,23,0.08); }
+
+  /* Footer */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(212,160,23,0.12);
+    padding: 60px 60px 40px;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(212,160,23,0.08);
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-copy { font-size: 11px; color: rgba(136,136,136,0.6); letter-spacing: 1px; }
+
+  .footer-bottom-links { display: flex; gap: 24px; }
+  .footer-bottom-links a { font-size: 11px; color: rgba(136,136,136,0.5); text-decoration: none; letter-spacing: 1px; transition: color 0.3s; }
+  .footer-bottom-links a:hover { color: var(--gold-light); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .property-content { grid-template-columns: 1fr; }
+    .property-sidebar { position: static; padding: 40px 24px; }
+    .property-main { padding: 40px 24px 60px; }
+    .back-link { padding: 20px 24px; }
+    .gallery { height: 45vh; }
+    .gallery-thumbs { display: none; }
+    footer { padding: 48px 24px 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-brand-full { display: none; }
+    .nav-links { gap: 14px; }
+    .prop-stats { gap: 24px; }
+    .features-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="index.html">
+    <img class="nav-logo-img" src="PROFILE_PIC_4K_NO_BACKGROUND.png" alt="HS Logo">
+    <div class="nav-brand-text">
+      <span class="nav-brand-hs">HS</span>
+      <span class="nav-brand-full">Haigh Spanoudakis</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="properties.html">Properties</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="index.html#contact">Contact Us</a></li>
+  </ul>
+</nav>
+
+<div class="property-page" id="propertyPage">
+  <!-- Filled by JS -->
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Haigh Spanoudakis Real Estate. All rights reserved.</span>
+    <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+  </div>
+</footer>
+
+<script src="listings.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const listing = id ? getListingById(id) : null;
+
+  const page = document.getElementById('propertyPage');
+
+  if (!listing) {
+    page.innerHTML = `
+      <div class="not-found">
+        <h2>Property Not Found</h2>
+        <p>This listing may have been removed or the link is incorrect.</p>
+        <a href="properties.html">View All Properties</a>
+      </div>`;
+  } else {
+    // Set page title
+    document.title = `${listing.title} | Haigh Spanoudakis Real Estate`;
+
+    // Gallery
+    const images = listing.images && listing.images.length ? listing.images : [];
+    let galleryHtml = '';
+
+    if (images.length) {
+      const thumbs = images.map((src, i) =>
+        `<img class="gallery-thumb ${i === 0 ? 'active' : ''}" src="${src}" alt="Photo ${i+1}" onclick="selectImage(this, '${src}')">`
+      ).join('');
+      galleryHtml = `
+        <div class="gallery-main">
+          <img id="mainImg" src="${images[0]}" alt="${listing.title}">
+          <div class="gallery-overlay-tag">${listing.tag || ''}</div>
+        </div>
+        ${images.length > 1 ? `<div class="gallery-thumbs">${thumbs}</div>` : ''}`;
+    } else {
+      galleryHtml = `
+        <div class="gallery-main">
+          <div class="gallery-placeholder">
+            <div class="gallery-placeholder-icon">HS</div>
+          </div>
+          <div class="gallery-overlay-tag">${listing.tag || ''}</div>
+        </div>`;
+    }
+
+    // Stats
+    const stats = [
+      listing.area ? { label: 'Area', value: listing.area } : null,
+      listing.bedrooms ? { label: 'Bedrooms', value: listing.bedrooms } : null,
+      listing.bathrooms ? { label: 'Bathrooms', value: listing.bathrooms } : null,
+      listing.type ? { label: 'Type', value: listing.type } : null,
+    ].filter(Boolean);
+
+    const statsHtml = stats.length ? `
+      <div class="prop-stats">
+        ${stats.map(s => `
+          <div class="stat">
+            <span class="stat-label">${s.label}</span>
+            <span class="stat-value">${s.value}</span>
+          </div>`).join('')}
+      </div>` : '';
+
+    // Features
+    const features = listing.features ? listing.features.split('\n').filter(f => f.trim()) : [];
+    const featuresHtml = features.length ? `
+      <p class="prop-desc-title">Features & Amenities</p>
+      <div class="features-grid">
+        ${features.map(f => `<div class="feature-item">${f.trim()}</div>`).join('')}
+      </div>` : '';
+
+    page.innerHTML = `
+      <div class="gallery">${galleryHtml}</div>
+      <a class="back-link" href="properties.html">Back to All Properties</a>
+      <div class="property-content">
+        <div class="property-main">
+          <p class="prop-tag">${listing.tag || ''}</p>
+          <h1 class="prop-title">${listing.title}</h1>
+          <p class="prop-location">${listing.location}</p>
+          <div class="gold-line"></div>
+          <div class="prop-price">${listing.price}</div>
+          ${statsHtml}
+          ${listing.description ? `<p class="prop-desc-title">About This Property</p><p class="prop-desc">${listing.description}</p>` : ''}
+          ${featuresHtml}
+        </div>
+        <div class="property-sidebar">
+          <div class="sidebar-title">Enquire About This Property</div>
+          <form class="enquiry-form" onsubmit="submitEnquiry(event)">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input class="form-input" type="text" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-input" type="email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone (optional)</label>
+              <input class="form-input" type="tel" placeholder="+30 …">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="form-textarea" placeholder="I am interested in this property…"></textarea>
+            </div>
+            <button type="submit" class="enquire-btn"><span>Send Enquiry</span></button>
+          </form>
+          <div class="divider-or">or</div>
+          <p class="contact-direct">Call us directly<br><a href="tel:+302100000000">+30 210 000 0000</a></p>
+        </div>
+      </div>`;
+  }
+
+  function selectImage(thumb, src) {
+    document.getElementById('mainImg').src = src;
+    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+  }
+
+  function submitEnquiry(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.enquire-btn span');
+    btn.textContent = 'Sent ✓';
+    setTimeout(() => btn.textContent = 'Send Enquiry', 3000);
+  }
+</script>
+</body>
+</html>

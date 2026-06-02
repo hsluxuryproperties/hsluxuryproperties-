@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Properties | Haigh Spanoudakis Real Estate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F0C040;
+    --gold-dark: #A07810;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark-2: #1A1A1A;
+    --dark-3: #222222;
+    --text-muted: #888888;
+    --text-light: #CCCCCC;
+    --white: #F5F0E8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 80px;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212,160,23,0.2);
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-img {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--gold-light);
+    box-shadow: 0 0 12px rgba(212,160,23,0.35);
+    display: block;
+    background: #000;
+  }
+
+  .nav-brand-text { display: flex; flex-direction: column; gap: 1px; }
+
+  .nav-brand-hs {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #C8A84B;
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  .nav-brand-full {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #DDDDDD;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold-light);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--gold-light); }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { width: 100%; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    padding: 140px 60px 60px;
+    background: var(--dark);
+    border-bottom: 1px solid rgba(212,160,23,0.1);
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    max-width: 500px;
+  }
+
+  .gold-line { width: 40px; height: 1px; background: var(--gold-light); margin-bottom: 32px; }
+
+  /* ── SEARCH & FILTERS ── */
+  .search-bar-wrap {
+    padding: 32px 60px;
+    background: var(--dark-2);
+    border-bottom: 1px solid rgba(212,160,23,0.1);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-input-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 240px;
+  }
+
+  .search-input-wrap svg {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    stroke: var(--text-muted);
+    fill: none;
+    stroke-width: 1.5;
+  }
+
+  .search-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212,160,23,0.2);
+    color: var(--white);
+    padding: 13px 16px 13px 44px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .search-input:focus { border-color: rgba(212,160,23,0.5); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  .filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    background: transparent;
+    border: 1px solid rgba(212,160,23,0.35);
+    color: var(--gold-light);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active { background: rgba(212,160,23,0.08); border-color: var(--gold-light); }
+
+  .filter-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  /* Filter panel */
+  .filter-panel {
+    background: var(--dark-3);
+    border-bottom: 1px solid rgba(212,160,23,0.1);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+  }
+
+  .filter-panel.open { max-height: 300px; }
+
+  .filter-panel-inner {
+    padding: 28px 60px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .filter-group { display: flex; flex-direction: column; gap: 8px; min-width: 160px; }
+
+  .filter-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .filter-select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212,160,23,0.2);
+    color: var(--white);
+    padding: 10px 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+
+  .filter-select:focus { border-color: rgba(212,160,23,0.5); }
+  .filter-select option { background: var(--dark-2); }
+
+  .filter-clear {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text-muted);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .filter-clear:hover { border-color: rgba(212,160,23,0.35); color: var(--gold-light); }
+
+  /* ── TABS ── */
+  .properties-tabs-wrap {
+    padding: 0 60px;
+    background: var(--dark);
+    border-bottom: 1px solid rgba(212,160,23,0.12);
+    display: flex;
+    gap: 0;
+  }
+
+  .tab-btn {
+    padding: 18px 32px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold-light); }
+  .tab-btn:hover { color: var(--gold-light); }
+
+  /* ── GRID ── */
+  .properties-body {
+    padding: 48px 60px 80px;
+    background: var(--dark);
+    min-height: 50vh;
+  }
+
+  .results-count {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+
+  .properties-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .property-card {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: var(--dark-3);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+
+  .property-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #161616 0%, #1e1e1e 50%, #161616 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.6s ease;
+  }
+
+  .property-card img.prop-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    display: block;
+  }
+
+  .property-card:hover img.prop-img { transform: scale(1.04); }
+  .property-card:hover .property-placeholder {
+    background: linear-gradient(135deg, #1e1e1e 0%, #262626 50%, #1e1e1e 100%);
+  }
+
+  .placeholder-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 600;
+    color: rgba(212,160,23,0.18);
+    letter-spacing: -2px;
+    transition: color 0.4s;
+  }
+
+  .property-card:hover .placeholder-icon { color: rgba(212,160,23,0.28); }
+
+  .property-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 55%);
+    transform: translateY(6px);
+    transition: transform 0.3s ease;
+  }
+
+  .property-card:hover .property-overlay { transform: translateY(0); }
+
+  .property-tag {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+    font-weight: 400;
+  }
+
+  .property-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .property-location {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .property-price {
+    font-size: 13px;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+    font-weight: 400;
+  }
+
+  .property-cta {
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    opacity: 0;
+    transition: opacity 0.3s 0.05s;
+  }
+
+  .property-card:hover .property-cta { opacity: 1; }
+  .property-cta::after { content: '→'; }
+
+  .empty-state {
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .empty-state p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .empty-state span {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(136,136,136,0.5);
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(212,160,23,0.12);
+    padding: 60px 60px 40px;
+  }
+
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 48px; }
+
+  .footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; color: var(--gold-light); letter-spacing: 3px; margin-bottom: 4px; }
+
+  .footer-brand-tag { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 20px; }
+
+  .footer-desc { font-size: 13px; color: var(--text-muted); line-height: 1.8; max-width: 280px; }
+
+  .footer-heading { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 20px; font-weight: 400; }
+
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 12px; }
+  .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold-light); }
+
+  .footer-contact-item { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(212,160,23,0.08);
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-copy { font-size: 11px; color: rgba(136,136,136,0.6); letter-spacing: 1px; }
+
+  .footer-bottom-links { display: flex; gap: 24px; }
+  .footer-bottom-links a { font-size: 11px; color: rgba(136,136,136,0.5); text-decoration: none; letter-spacing: 1px; transition: color 0.3s; }
+  .footer-bottom-links a:hover { color: var(--gold-light); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { gap: 20px; }
+    .page-header { padding: 120px 24px 48px; }
+    .search-bar-wrap { padding: 20px 24px; }
+    .filter-panel-inner { padding: 20px 24px; }
+    .properties-tabs-wrap { padding: 0 24px; }
+    .properties-body { padding: 32px 24px 60px; }
+    .properties-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 48px 24px 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-brand-full { display: none; }
+    .nav-links { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="index.html">
+    <img class="nav-logo-img" src="PROFILE_PIC_4K_NO_BACKGROUND.png" alt="HS Logo">
+    <div class="nav-brand-text">
+      <span class="nav-brand-hs">HS</span>
+      <span class="nav-brand-full">Haigh Spanoudakis</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="properties.html" class="active">Properties</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="index.html#contact">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <p class="section-label">Our Portfolio</p>
+  <h1 class="section-title">Curated Listings</h1>
+  <div class="gold-line"></div>
+  <p class="section-sub">Every property in our portfolio is hand-selected for its exceptional quality, location, and investment potential.</p>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar-wrap">
+  <div class="search-input-wrap">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input class="search-input" type="text" id="searchInput" placeholder="Search by name, location, or type…" oninput="renderListings()">
+  </div>
+  <button class="filter-btn" id="filterToggle" onclick="toggleFilters()">
+    <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+    Filters
+  </button>
+</div>
+
+<!-- FILTER PANEL -->
+<div class="filter-panel" id="filterPanel">
+  <div class="filter-panel-inner">
+    <div class="filter-group">
+      <label class="filter-label">Property Type</label>
+      <select class="filter-select" id="filterType" onchange="renderListings()">
+        <option value="">All Types</option>
+        <option value="Villa">Villa</option>
+        <option value="Penthouse">Penthouse</option>
+        <option value="Apartment">Apartment</option>
+        <option value="Land">Land</option>
+        <option value="Commercial">Commercial</option>
+        <option value="Estate">Estate</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Location</label>
+      <select class="filter-select" id="filterLocation" onchange="renderListings()">
+        <option value="">All Locations</option>
+        <option value="Athens">Athens</option>
+        <option value="Mykonos">Mykonos</option>
+        <option value="Santorini">Santorini</option>
+        <option value="Corfu">Corfu</option>
+        <option value="Crete">Crete</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Max Price</label>
+      <select class="filter-select" id="filterPrice" onchange="renderListings()">
+        <option value="">Any Price</option>
+        <option value="1000000">Up to €1M</option>
+        <option value="2000000">Up to €2M</option>
+        <option value="3000000">Up to €3M</option>
+        <option value="5000000">Up to €5M</option>
+      </select>
+    </div>
+    <button class="filter-clear" onclick="clearFilters()">Clear Filters</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="properties-tabs-wrap">
+  <button class="tab-btn active" id="tab-all" onclick="setTab('all')">All</button>
+  <button class="tab-btn" id="tab-investor" onclick="setTab('investor')">For Investors</button>
+  <button class="tab-btn" id="tab-homeowner" onclick="setTab('homeowner')">For Homeowners</button>
+</div>
+
+<!-- GRID -->
+<div class="properties-body">
+  <div class="results-count" id="resultsCount"></div>
+  <div class="properties-grid" id="propertiesGrid"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Haigh Spanoudakis</div>
+      <div class="footer-brand-tag">Real Estate · Luxury Properties</div>
+      <p class="footer-desc">Connecting discerning clients with the world's most exceptional properties. Discretion, expertise, and extraordinary results.</p>
+    </div>
+    <div>
+      <div class="footer-heading">Navigation</div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="properties.html">Properties</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+        <li><a href="index.html#contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Contact</div>
+      <div class="footer-contact-item">info@hsluxuryproperties.com</div>
+      <div class="footer-contact-item">+30 210 000 0000</div>
+      <div class="footer-contact-item">Athens, Greece</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Haigh Spanoudakis Real Estate. All rights reserved.</span>
+    <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+  </div>
+</footer>
+
+<script src="listings.js"></script>
+<script>
+  let currentTab = 'all';
+
+  function setTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    renderListings();
+  }
+
+  function toggleFilters() {
+    const panel = document.getElementById('filterPanel');
+    const btn = document.getElementById('filterToggle');
+    panel.classList.toggle('open');
+    btn.classList.toggle('active');
+  }
+
+  function clearFilters() {
+    document.getElementById('filterType').value = '';
+    document.getElementById('filterLocation').value = '';
+    document.getElementById('filterPrice').value = '';
+    document.getElementById('searchInput').value = '';
+    renderListings();
+  }
+
+  function parsePrice(priceStr) {
+    return parseInt(priceStr.replace(/[^0-9]/g, '')) || 0;
+  }
+
+  function renderListings() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const filterType = document.getElementById('filterType').value;
+    const filterLocation = document.getElementById('filterLocation').value;
+    const filterPrice = document.getElementById('filterPrice').value;
+
+    let listings = getListings();
+
+    // Tab filter
+    if (currentTab !== 'all') {
+      listings = listings.filter(l => l.category === currentTab);
+    }
+
+    // Search
+    if (search) {
+      listings = listings.filter(l =>
+        l.title.toLowerCase().includes(search) ||
+        l.location.toLowerCase().includes(search) ||
+        (l.tag || '').toLowerCase().includes(search) ||
+        (l.type || '').toLowerCase().includes(search)
+      );
+    }
+
+    // Type filter
+    if (filterType) {
+      listings = listings.filter(l => (l.type || '').includes(filterType));
+    }
+
+    // Location filter
+    if (filterLocation) {
+      listings = listings.filter(l => l.location.includes(filterLocation));
+    }
+
+    // Price filter
+    if (filterPrice) {
+      listings = listings.filter(l => parsePrice(l.price) <= parseInt(filterPrice));
+    }
+
+    const grid = document.getElementById('propertiesGrid');
+    const count = document.getElementById('resultsCount');
+
+    if (!listings.length) {
+      grid.innerHTML = '';
+      grid.insertAdjacentHTML('afterend', '');
+      count.textContent = '0 listings found';
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><p>No properties found</p><span>Try adjusting your search or filters</span></div>`;
+      return;
+    }
+
+    count.textContent = `${listings.length} listing${listings.length !== 1 ? 's' : ''} found`;
+
+    grid.innerHTML = listings.map(l => {
+      const img = l.images && l.images[0]
+        ? `<img class="prop-img" src="${l.images[0]}" alt="${l.title}">`
+        : `<div class="property-placeholder"><div class="placeholder-icon">HS</div></div>`;
+      return `
+        <a class="property-card" href="property.html?id=${l.id}">
+          ${img}
+          <div class="property-overlay">
+            <span class="property-tag">${l.tag || ''}</span>
+            <div class="property-name">${l.title}</div>
+            <div class="property-location">${l.location}</div>
+            <div class="property-price">${l.price}</div>
+            <div class="property-cta">View Property</div>
+          </div>
+        </a>`;
+    }).join('');
+  }
+
+  renderListings();
+</script>
+</body>
+</html>
