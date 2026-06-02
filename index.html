@@ -9,9 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold: #D4A017;
-    --gold-light: #F0C040;
-    --gold-dark: #A07810;
+    --gold: #C9A84C;
+    --gold-light: #E2C068;
+    --gold-dark: #9A7A2A;
     --black: #0A0A0A;
     --dark: #111111;
     --dark-2: #1A1A1A;
@@ -27,7 +27,7 @@
   body {
     background: var(--black);
     color: var(--white);
-    font-family: 'Montserrat', sans-serif;
+    font-family: \'Montserrat\', sans-serif;
     font-weight: 300;
     line-height: 1.7;
     overflow-x: hidden;
@@ -37,31 +37,45 @@
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
-    z-index: 100;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 48px;
     height: 80px;
-    background: rgba(10,10,10,0.95);
+    background: rgba(10,10,10,0.97);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(212,160,23,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.25);
   }
 
-  /* Left side: logo image + brand text */
   .nav-brand {
     display: flex;
     align-items: center;
     gap: 14px;
     text-decoration: none;
     flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  /* Gold circle around logo */
+  .nav-logo-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--gold-light);
+    box-shadow: 0 0 12px rgba(201,168,76,0.35), inset 0 0 8px rgba(201,168,76,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #0a0a0a;
   }
 
   .nav-logo-img {
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: 0;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
     display: block;
   }
 
@@ -72,7 +86,7 @@
   }
 
   .nav-brand-hs {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: \'Cormorant Garamond\', serif;
     font-size: 22px;
     font-weight: 600;
     color: var(--gold-light);
@@ -81,7 +95,7 @@
   }
 
   .nav-brand-full {
-    font-family: 'Montserrat', sans-serif;
+    font-family: \'Montserrat\', sans-serif;
     font-size: 9px;
     letter-spacing: 4px;
     text-transform: uppercase;
@@ -89,7 +103,6 @@
     line-height: 1;
   }
 
-  /* Right side: nav links always visible */
   .nav-links {
     display: flex;
     gap: 40px;
@@ -98,19 +111,20 @@
   }
 
   .nav-links a {
-    font-family: 'Montserrat', sans-serif;
+    font-family: \'Montserrat\', sans-serif;
     font-size: 10px;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #DDDDDD;
+    color: #CCCCCC;
     text-decoration: none;
     position: relative;
     transition: color 0.3s;
     white-space: nowrap;
+    cursor: pointer;
   }
 
   .nav-links a::after {
-    content: '';
+    content: \'\';
     position: absolute;
     bottom: -4px; left: 0;
     width: 0; height: 1px;
@@ -118,11 +132,48 @@
     transition: width 0.3s ease;
   }
 
-  .nav-links a:hover { color: var(--gold-light); }
-  .nav-links a:hover::after { width: 100%; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
-  /* ── HERO ── */
-  #home {
+  /* ── PAGES (SPA) ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 60px; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-family: \'Cormorant Garamond\', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 60px;
+    max-width: 500px;
+  }
+
+  .gold-line { width: 40px; height: 1px; background: var(--gold-light); margin-bottom: 48px; }
+
+  /* ── HOME / HERO ── */
+  #page-home { background: var(--black); }
+
+  .hero-section {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -134,25 +185,22 @@
     overflow: hidden;
   }
 
-  #home::before {
-    content: '';
+  .hero-section::before {
+    content: \'\';
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at 50% 50%, rgba(212,160,23,0.06) 0%, transparent 70%),
-      repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(212,160,23,0.025) 60px, rgba(212,160,23,0.025) 61px);
+      radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
+      repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(201,168,76,0.025) 60px, rgba(201,168,76,0.025) 61px);
   }
 
-  .hero-monogram {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(80px, 12vw, 140px);
-    font-weight: 600;
-    line-height: 1;
-    color: var(--gold-light);
-    text-shadow: 0 0 60px rgba(212,160,23,0.4), 0 2px 4px rgba(0,0,0,0.8);
-    letter-spacing: -4px;
-    margin-bottom: 32px;
+  .hero-logo-img {
+    width: clamp(180px, 22vw, 280px);
+    height: auto;
+    margin-bottom: 40px;
     position: relative;
+    filter: drop-shadow(0 0 40px rgba(201,168,76,0.3));
+    animation: fadeUp 1s ease forwards;
   }
 
   .hero-divider {
@@ -164,7 +212,7 @@
 
   .hero-divider::before,
   .hero-divider::after {
-    content: '';
+    content: \'\';
     flex: 1;
     height: 1px;
     background: linear-gradient(to right, transparent, var(--gold));
@@ -172,11 +220,10 @@
   }
 
   .hero-divider::after { background: linear-gradient(to left, transparent, var(--gold)); }
-
   .hero-diamond { width: 6px; height: 6px; background: var(--gold-light); transform: rotate(45deg); }
 
   h1 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: \'Cormorant Garamond\', serif;
     font-size: clamp(28px, 4vw, 48px);
     font-weight: 300;
     letter-spacing: 6px;
@@ -208,10 +255,14 @@
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    background: transparent;
+    font-family: \'Montserrat\', sans-serif;
+    font-weight: 300;
   }
 
   .hero-cta::before {
-    content: '';
+    content: \'\';
     position: absolute; inset: 0;
     background: var(--gold);
     transform: translateX(-100%);
@@ -222,66 +273,23 @@
   .hero-cta:hover::before { transform: translateX(0); }
   .hero-cta span { position: relative; z-index: 1; }
 
-  /* ── SECTION BASE ── */
-  section { padding: 100px 60px; }
+  /* Home featured listings */
+  .home-listings-section {
+    padding: 80px 60px 100px;
+    background: var(--dark);
+  }
 
-  .section-label {
+  .cat-label {
     font-size: 10px;
-    letter-spacing: 5px;
+    letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--gold-light);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    margin-top: 40px;
     font-weight: 400;
   }
 
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 300;
-    letter-spacing: 2px;
-    color: var(--white);
-    margin-bottom: 16px;
-  }
-
-  .section-sub {
-    font-size: 13px;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-    margin-bottom: 60px;
-    max-width: 500px;
-  }
-
-  .gold-line { width: 40px; height: 1px; background: var(--gold-light); margin-bottom: 48px; }
-
-  /* ── PROPERTIES ── */
-  #properties { background: var(--dark); }
-
-  .properties-tabs {
-    display: flex;
-    gap: 0;
-    margin-bottom: 32px;
-    border-bottom: 1px solid rgba(212,160,23,0.2);
-  }
-
-  .tab-btn {
-    padding: 14px 32px;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: var(--text-muted);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-bottom: -1px;
-  }
-
-  .tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold-light); }
-  .tab-btn:hover { color: var(--gold-light); }
-
-  /* 3-column grid for both investor and homeowner cards */
+  /* ── PROPERTY CARDS ── */
   .properties-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -294,7 +302,10 @@
     overflow: hidden;
     background: var(--dark-3);
     cursor: pointer;
+    transition: transform 0.3s ease;
   }
+
+  .property-card:hover { transform: translateY(-4px); }
 
   .property-placeholder {
     width: 100%;
@@ -310,16 +321,26 @@
     background: linear-gradient(135deg, #1e1e1e 0%, #262626 50%, #1e1e1e 100%);
   }
 
+  .property-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    display: block;
+  }
+
+  .property-card:hover .property-img { transform: scale(1.04); }
+
   .placeholder-icon {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: \'Cormorant Garamond\', serif;
     font-size: 56px;
     font-weight: 600;
-    color: rgba(212,160,23,0.18);
+    color: rgba(201,168,76,0.18);
     letter-spacing: -2px;
     transition: color 0.4s;
   }
 
-  .property-card:hover .placeholder-icon { color: rgba(212,160,23,0.28); }
+  .property-card:hover .placeholder-icon { color: rgba(201,168,76,0.28); }
 
   .property-overlay {
     position: absolute;
@@ -328,7 +349,7 @@
     flex-direction: column;
     justify-content: flex-end;
     padding: 24px;
-    background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 55%);
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 55%);
     transform: translateY(6px);
     transition: transform 0.3s ease;
   }
@@ -345,7 +366,7 @@
   }
 
   .property-name {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: \'Cormorant Garamond\', serif;
     font-size: 20px;
     font-weight: 400;
     color: var(--white);
@@ -366,7 +387,7 @@
     font-weight: 400;
   }
 
-  .property-cta {
+  .property-cta-btn {
     margin-top: 10px;
     display: inline-flex;
     align-items: center;
@@ -378,35 +399,322 @@
     opacity: 0;
     transition: opacity 0.3s 0.05s;
     cursor: pointer;
+    background: none;
+    border: none;
+    font-family: \'Montserrat\', sans-serif;
+    padding: 0;
   }
 
-  .property-card:hover .property-cta { opacity: 1; }
+  .property-card:hover .property-cta-btn { opacity: 1; }
+  .property-cta-btn::after { content: \'→\'; transition: transform 0.3s; }
+  .property-card:hover .property-cta-btn::after { transform: translateX(4px); }
 
-  .property-cta::after { content: '→'; transition: transform 0.3s; }
-  .property-card:hover .property-cta::after { transform: translateX(4px); }
+  /* ── PROPERTIES PAGE ── */
+  #page-properties { background: var(--dark); min-height: 100vh; padding-top: 80px; }
 
-  /* Category labels above grids */
-  .cat-label {
+  .properties-header {
+    padding: 80px 60px 40px;
+    background: var(--dark);
+  }
+
+  .properties-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .tab-btn {
+    padding: 14px 32px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold-light); }
+  .tab-btn:hover { color: var(--gold-light); }
+
+  /* Search bar */
+  .search-filter-bar {
+    padding: 28px 60px;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-input-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .search-input-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    stroke: var(--text-muted);
+    fill: none;
+    stroke-width: 1.5;
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--white);
+    padding: 12px 16px 12px 42px;
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+    letter-spacing: 0.5px;
+  }
+
+  .search-input::placeholder { color: var(--text-muted); }
+  .search-input:focus { border-color: rgba(201,168,76,0.5); }
+
+  .filter-select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--white);
+    padding: 12px 16px;
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    min-width: 150px;
+  }
+
+  .filter-select option { background: var(--dark-2); }
+  .filter-select:focus { border-color: rgba(201,168,76,0.5); }
+
+  .clear-search-btn {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--text-muted);
+    padding: 12px 20px;
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .clear-search-btn:hover { color: var(--gold-light); border-color: var(--gold-light); }
+
+  .properties-grid-section { padding: 40px 60px 80px; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .no-results {
+    text-align: center;
+    padding: 60px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  /* ── PROPERTY DETAIL PAGE ── */
+  #page-property-detail { background: var(--black); min-height: 100vh; padding-top: 80px; }
+
+  .property-detail-hero {
+    height: 60vh;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 60px;
+    overflow: hidden;
+    background: var(--dark-3);
+  }
+
+  .property-detail-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+  }
+
+  .property-detail-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #161616 0%, #1e1e1e 100%);
+  }
+
+  .property-detail-placeholder-hs {
+    font-family: \'Cormorant Garamond\', serif;
+    font-size: 120px;
+    font-weight: 600;
+    color: rgba(201,168,76,0.1);
+  }
+
+  .property-detail-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+  }
+
+  .property-detail-info {
+    position: relative;
+    z-index: 1;
+  }
+
+  .property-detail-tag {
     font-size: 10px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--gold-light);
-    margin-bottom: 16px;
-    margin-top: 40px;
-    font-weight: 400;
+    margin-bottom: 10px;
   }
 
-  .cat-label:first-child { margin-top: 0; }
+  .property-detail-name {
+    font-family: \'Cormorant Garamond\', serif;
+    font-size: clamp(32px, 5vw, 60px);
+    font-weight: 300;
+    color: var(--white);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
 
-  /* Home section property grids */
-  .home-properties { width: 100%; max-width: 1200px; margin-top: 80px; }
+  .property-detail-location {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+  }
+
+  .property-detail-body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+    padding: 60px;
+  }
+
+  .property-detail-desc {
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.9;
+    letter-spacing: 0.3px;
+  }
+
+  .property-detail-sidebar {
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 36px;
+    align-self: start;
+  }
+
+  .property-detail-price {
+    font-family: \'Cormorant Garamond\', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .property-detail-price-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+
+  .property-detail-specs {
+    list-style: none;
+    margin-bottom: 32px;
+  }
+
+  .property-detail-specs li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .property-detail-specs li span:first-child { color: var(--text-muted); }
+  .property-detail-specs li span:last-child { color: var(--white); font-weight: 400; }
+
+  .property-enquire-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: 1px solid var(--gold-light);
+    color: var(--gold-light);
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .property-enquire-btn::before {
+    content: \'\';
+    position: absolute; inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+
+  .property-enquire-btn:hover { color: var(--black); }
+  .property-enquire-btn:hover::before { transform: translateX(0); }
+  .property-enquire-btn span { position: relative; z-index: 1; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: \'Montserrat\', sans-serif;
+    padding: 20px 60px;
+    transition: color 0.3s;
+  }
+
+  .back-btn:hover { color: var(--gold-light); }
 
   /* ── FAQ ── */
-  #faq { background: var(--black); }
+  #page-faq { background: var(--black); min-height: 100vh; }
 
   .faq-list { max-width: 800px; }
 
-  .faq-item { border-bottom: 1px solid rgba(212,160,23,0.12); overflow: hidden; }
+  .faq-item { border-bottom: 1px solid rgba(201,168,76,0.12); overflow: hidden; }
 
   .faq-question {
     width: 100%;
@@ -418,7 +726,7 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: \'Cormorant Garamond\', serif;
     font-size: 20px;
     font-weight: 400;
     color: var(--white);
@@ -432,7 +740,7 @@
   .faq-icon { width: 20px; height: 20px; position: relative; flex-shrink: 0; }
 
   .faq-icon::before, .faq-icon::after {
-    content: '';
+    content: \'\';
     position: absolute;
     background: var(--gold-light);
     transition: transform 0.3s;
@@ -454,7 +762,7 @@
   .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 26px; }
 
   /* ── CONTACT ── */
-  #contact { background: var(--dark); }
+  #page-contact { background: var(--dark); min-height: 100vh; }
 
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
 
@@ -462,7 +770,7 @@
 
   .contact-icon {
     width: 40px; height: 40px;
-    border: 1px solid rgba(212,160,23,0.35);
+    border: 1px solid rgba(201,168,76,0.35);
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
@@ -471,7 +779,7 @@
 
   .contact-info-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 4px; font-weight: 400; }
 
-  .contact-info-value { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--white); font-weight: 300; }
+  .contact-info-value { font-family: \'Cormorant Garamond\', serif; font-size: 18px; color: var(--white); font-weight: 300; }
 
   .contact-form { display: flex; flex-direction: column; gap: 20px; }
 
@@ -479,12 +787,12 @@
 
   .form-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); }
 
-  .form-input, .form-textarea, .form-select {
+  .form-input, .form-textarea, .form-select-contact {
     background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(212,160,23,0.18);
+    border: 1px solid rgba(201,168,76,0.18);
     color: var(--white);
     padding: 14px 18px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: \'Montserrat\', sans-serif;
     font-size: 13px;
     font-weight: 300;
     outline: none;
@@ -492,17 +800,17 @@
     width: 100%;
   }
 
-  .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: rgba(212,160,23,0.55); }
+  .form-input:focus, .form-textarea:focus, .form-select-contact:focus { border-color: rgba(201,168,76,0.55); }
   .form-textarea { min-height: 120px; resize: vertical; }
-  .form-select { cursor: pointer; }
-  .form-select option { background: var(--dark-2); }
+  .form-select-contact { cursor: pointer; }
+  .form-select-contact option { background: var(--dark-2); }
 
   .submit-btn {
     padding: 16px 40px;
     background: transparent;
     border: 1px solid var(--gold-light);
     color: var(--gold-light);
-    font-family: 'Montserrat', sans-serif;
+    font-family: \'Montserrat\', sans-serif;
     font-size: 11px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -514,7 +822,7 @@
   }
 
   .submit-btn::before {
-    content: '';
+    content: \'\';
     position: absolute; inset: 0;
     background: var(--gold);
     transform: translateX(-100%);
@@ -525,16 +833,172 @@
   .submit-btn:hover::before { transform: translateX(0); }
   .submit-btn span { position: relative; z-index: 1; }
 
+  /* ── ADMIN PAGE ── */
+  #page-admin { background: var(--black); min-height: 100vh; }
+
+  .admin-login {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    text-align: center;
+  }
+
+  .admin-lock-icon {
+    width: 56px;
+    height: 56px;
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 32px;
+  }
+
+  .admin-lock-icon svg { width: 24px; height: 24px; stroke: var(--gold-light); fill: none; stroke-width: 1.5; }
+
+  .admin-panel {
+    display: none;
+    padding: 40px 60px 80px;
+  }
+
+  .admin-panel.visible { display: block; }
+
+  .admin-listings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+    font-size: 13px;
+  }
+
+  .admin-listings-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    font-weight: 400;
+  }
+
+  .admin-listings-table td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text-light);
+    vertical-align: middle;
+  }
+
+  .admin-listings-table tr:hover td { background: rgba(201,168,76,0.03); }
+
+  .admin-delete-btn {
+    background: transparent;
+    border: 1px solid rgba(200,60,60,0.4);
+    color: rgba(200,80,80,0.8);
+    padding: 6px 14px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-family: \'Montserrat\', sans-serif;
+    transition: all 0.3s;
+  }
+
+  .admin-delete-btn:hover { background: rgba(200,60,60,0.15); border-color: rgba(200,60,60,0.7); }
+
+  .admin-add-form {
+    background: rgba(201,168,76,0.03);
+    border: 1px solid rgba(201,168,76,0.12);
+    padding: 40px;
+    margin-top: 40px;
+  }
+
+  .admin-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .admin-form-grid .span-2 { grid-column: span 2; }
+
+  .admin-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .admin-input, .admin-select, .admin-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.18);
+    color: var(--white);
+    padding: 12px 16px;
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .admin-input:focus, .admin-select:focus, .admin-textarea:focus { border-color: rgba(201,168,76,0.5); }
+  .admin-select option { background: var(--dark-2); }
+  .admin-textarea { min-height: 100px; resize: vertical; }
+
+  .admin-submit-btn {
+    margin-top: 24px;
+    padding: 14px 36px;
+    background: var(--gold-dark);
+    border: 1px solid var(--gold-light);
+    color: var(--black);
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .admin-submit-btn:hover { background: var(--gold-light); }
+
+  .admin-logout-btn {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--text-muted);
+    padding: 10px 24px;
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    float: right;
+  }
+
+  .admin-logout-btn:hover { color: var(--gold-light); border-color: var(--gold-light); }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 0;
+  }
+
+  .badge-investor { background: rgba(201,168,76,0.12); color: var(--gold-light); }
+  .badge-homeowner { background: rgba(100,160,100,0.12); color: #88CC88; }
+
   /* ── FOOTER ── */
   footer {
     background: var(--black);
-    border-top: 1px solid rgba(212,160,23,0.12);
+    border-top: 1px solid rgba(201,168,76,0.12);
     padding: 60px 60px 40px;
   }
 
   .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 48px; }
 
-  .footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; color: var(--gold-light); letter-spacing: 3px; margin-bottom: 4px; }
+  .footer-brand-name { font-family: \'Cormorant Garamond\', serif; font-size: 24px; font-weight: 300; color: var(--gold-light); letter-spacing: 3px; margin-bottom: 4px; }
 
   .footer-brand-tag { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 20px; }
 
@@ -544,13 +1008,13 @@
 
   .footer-links { list-style: none; }
   .footer-links li { margin-bottom: 12px; }
-  .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.3s; letter-spacing: 0.5px; }
+  .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.3s; letter-spacing: 0.5px; cursor: pointer; }
   .footer-links a:hover { color: var(--gold-light); }
 
   .footer-contact-item { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.6; }
 
   .footer-bottom {
-    border-top: 1px solid rgba(212,160,23,0.08);
+    border-top: 1px solid rgba(201,168,76,0.08);
     padding-top: 32px;
     display: flex;
     justify-content: space-between;
@@ -577,8 +1041,80 @@
   .delay-3 { animation-delay: 0.4s; }
   .delay-4 { animation-delay: 0.55s; }
 
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: var(--dark-2);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 48px;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .modal-box p { font-size: 14px; color: var(--text-muted); margin-top: 8px; margin-bottom: 28px; }
+
+  .modal-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.25);
+    color: var(--white);
+    padding: 14px 18px;
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    outline: none;
+    text-align: center;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+
+  .modal-input:focus { border-color: rgba(201,168,76,0.55); }
+  .modal-error { color: #cc4444; font-size: 11px; letter-spacing: 1px; margin-bottom: 12px; display: none; }
+
+  .modal-btns { display: flex; gap: 12px; justify-content: center; }
+
+  .modal-confirm-btn {
+    padding: 13px 32px;
+    background: var(--gold-dark);
+    border: 1px solid var(--gold-light);
+    color: var(--black);
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .modal-confirm-btn:hover { background: var(--gold-light); }
+
+  .modal-cancel-btn {
+    padding: 13px 32px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-muted);
+    font-family: \'Montserrat\', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .modal-cancel-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -587,10 +1123,20 @@
     .nav-links a { font-size: 9px; letter-spacing: 2px; }
     section { padding: 72px 24px; }
     .properties-grid { grid-template-columns: 1fr; gap: 12px; }
+    .properties-header { padding: 60px 24px 24px; }
+    .properties-grid-section { padding: 24px 24px 60px; }
+    .search-filter-bar { padding: 20px 24px; }
     .contact-grid { grid-template-columns: 1fr; gap: 48px; }
     .footer-grid { grid-template-columns: 1fr; gap: 40px; }
     footer { padding: 48px 24px 32px; }
     .footer-bottom { flex-direction: column; text-align: center; }
+    .property-detail-body { grid-template-columns: 1fr; padding: 40px 24px; }
+    .property-detail-hero { padding: 40px 24px; height: 50vh; }
+    .back-btn { padding: 16px 24px; }
+    .admin-panel { padding: 24px 24px 60px; }
+    .admin-form-grid { grid-template-columns: 1fr; }
+    .admin-form-grid .span-2 { grid-column: span 1; }
+    .home-listings-section { padding: 60px 24px 80px; }
   }
 
   @media (max-width: 640px) {
@@ -601,279 +1147,339 @@
 </head>
 <body>
 
+<!-- ADMIN PASSWORD MODAL -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal-box">
+    <p class="section-label" style="margin-bottom:8px">Admin Access</p>
+    <h2 style="font-family:\'Cormorant Garamond\',serif;font-size:28px;font-weight:300;letter-spacing:2px;color:var(--white);margin-bottom:8px;">Enter Password</h2>
+    <p>This area is restricted to authorised administrators only.</p>
+    <input class="modal-input" type="password" id="adminPwInput" placeholder="••••••••" onkeydown="if(event.key===\'Enter\')verifyAdminPw()">
+    <div class="modal-error" id="modalError">Incorrect password. Please try again.</div>
+    <div class="modal-btns">
+      <button class="modal-cancel-btn" onclick="closeAdminModal()"><span>Cancel</span></button>
+      <button class="modal-confirm-btn" onclick="verifyAdminPw()"><span>Enter</span></button>
+    </div>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav>
-  <a class="nav-brand" href="#home">
-    <img class="nav-logo-img" src="data:image/jpeg;base64,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" alt="HS Logo">
+  <div class="nav-brand" onclick="showPage(\'home\')">
+    <div class="nav-logo-wrap">
+      <img class="nav-logo-img" src="LOGO_PLACEHOLDER" alt="HS Logo">
+    </div>
     <div class="nav-brand-text">
       <span class="nav-brand-hs">HS</span>
       <span class="nav-brand-full">Haigh Spanoudakis</span>
     </div>
-  </a>
+  </div>
   <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#properties">Properties</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#contact">Contact Us</a></li>
+    <li><a onclick="showPage(\'home\')" data-page="home" class="active">Home</a></li>
+    <li><a onclick="showPage(\'properties\')" data-page="properties">Properties</a></li>
+    <li><a onclick="showPage(\'faq\')" data-page="faq">FAQ</a></li>
+    <li><a onclick="showPage(\'contact\')" data-page="contact">Contact Us</a></li>
+    <li><a onclick="requestAdminAccess()" data-page="admin" style="color:rgba(201,168,76,0.45);font-size:9px;letter-spacing:2px;">Admin</a></li>
   </ul>
 </nav>
 
-<!-- HERO / HOME -->
-<section id="home">
-  <div class="hero-monogram fade-up">HS</div>
-  <div class="hero-divider fade-up delay-1"><div class="hero-diamond"></div></div>
-  <h1 class="fade-up delay-1">Haigh Spanoudakis<br>Real Estate</h1>
-  <p class="hero-tagline fade-up delay-2">Luxury Properties · Extraordinary Living</p>
-  <a href="#properties" class="hero-cta fade-up delay-3"><span>Explore Properties</span></a>
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PAGE: HOME                                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <div class="hero-section">
+    <img class="hero-logo-img fade-up" src="LOGO_PLACEHOLDER" alt="Haigh Spanoudakis">
+    <div class="hero-divider fade-up delay-1"><div class="hero-diamond"></div></div>
+    <h1 class="fade-up delay-1">Haigh Spanoudakis<br>Real Estate</h1>
+    <p class="hero-tagline fade-up delay-2">Luxury Properties · Extraordinary Living</p>
+    <button class="hero-cta fade-up delay-3" onclick="showPage(\'properties\')"><span>Explore Properties</span></button>
+  </div>
 
-  <!-- 6 featured properties on home -->
-  <div class="home-properties fade-up delay-4">
-    <p class="section-label" style="text-align:center; margin-bottom: 48px;">Featured Listings</p>
+  <div class="home-listings-section">
+    <p class="section-label" style="text-align:center;margin-bottom:48px;">Featured Listings</p>
 
     <p class="cat-label">For Investors</p>
-    <div class="properties-grid">
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Investment · High Yield</span>
-          <div class="property-name">Prime Commercial Block</div>
-          <div class="property-location">Athens, Greece</div>
-          <div class="property-price">€2,400,000</div>
-          <div class="property-cta">Enquire</div>
-        </div>
-      </div>
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Investment · Rental Income</span>
-          <div class="property-name">Boutique Apartment Portfolio</div>
-          <div class="property-location">Mykonos, Greece</div>
-          <div class="property-price">€1,850,000</div>
-          <div class="property-cta">Enquire</div>
-        </div>
-      </div>
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Investment · Development</span>
-          <div class="property-name">Seafront Development Land</div>
-          <div class="property-location">Santorini, Greece</div>
-          <div class="property-price">€3,200,000</div>
-          <div class="property-cta">Enquire</div>
-        </div>
-      </div>
+    <div class="properties-grid" id="home-investors-grid">
+      <!-- dynamically rendered -->
     </div>
 
-    <p class="cat-label">For Homeowners</p>
-    <div class="properties-grid">
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Residence · Villa</span>
-          <div class="property-name">Cliffside Infinity Villa</div>
-          <div class="property-location">Santorini, Greece</div>
-          <div class="property-price">€4,750,000</div>
-          <div class="property-cta">View Property</div>
-        </div>
-      </div>
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Residence · Penthouse</span>
-          <div class="property-name">Athenian Sky Penthouse</div>
-          <div class="property-location">Kolonaki, Athens</div>
-          <div class="property-price">€2,100,000</div>
-          <div class="property-cta">View Property</div>
-        </div>
-      </div>
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Residence · Estate</span>
-          <div class="property-name">Riviera Private Estate</div>
-          <div class="property-location">Vouliagmeni, Athens</div>
-          <div class="property-price">€6,500,000</div>
-          <div class="property-cta">View Property</div>
-        </div>
-      </div>
+    <p class="cat-label" style="margin-top:48px;">For Homeowners</p>
+    <div class="properties-grid" id="home-homeowners-grid">
+      <!-- dynamically rendered -->
     </div>
   </div>
-</section>
+</div>
 
-<!-- PROPERTIES PAGE -->
-<section id="properties">
-  <p class="section-label">Our Portfolio</p>
-  <h2 class="section-title">Curated Listings</h2>
-  <div class="gold-line"></div>
-  <p class="section-sub">Every property in our portfolio is hand-selected for its exceptional quality, location, and investment potential.</p>
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PAGE: PROPERTIES                               -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="page" id="page-properties">
+  <div class="properties-header">
+    <p class="section-label">Our Portfolio</p>
+    <h2 class="section-title">Curated Listings</h2>
+    <div class="gold-line"></div>
+    <p class="section-sub">Every property in our portfolio is hand-selected for its exceptional quality, location, and investment potential.</p>
 
-  <div class="properties-tabs">
-    <button class="tab-btn active" onclick="switchTab('investors', this)">For Investors</button>
-    <button class="tab-btn" onclick="switchTab('homeowners', this)">For Homeowners</button>
-  </div>
-
-  <div class="tab-panel active" id="tab-investors">
-    <div class="properties-grid">
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Investment · High Yield</span>
-          <div class="property-name">Prime Commercial Block</div>
-          <div class="property-location">Athens, Greece</div>
-          <div class="property-price">€2,400,000</div>
-          <div class="property-cta">Enquire</div>
-        </div>
-      </div>
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Investment · Rental Income</span>
-          <div class="property-name">Boutique Apartment Portfolio</div>
-          <div class="property-location">Mykonos, Greece</div>
-          <div class="property-price">€1,850,000</div>
-          <div class="property-cta">Enquire</div>
-        </div>
-      </div>
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Investment · Development</span>
-          <div class="property-name">Seafront Development Land</div>
-          <div class="property-location">Santorini, Greece</div>
-          <div class="property-price">€3,200,000</div>
-          <div class="property-cta">Enquire</div>
-        </div>
-      </div>
+    <div class="properties-tabs">
+      <button class="tab-btn active" onclick="switchTab(\'investors\', this)">For Investors</button>
+      <button class="tab-btn" onclick="switchTab(\'homeowners\', this)">For Homeowners</button>
     </div>
   </div>
 
-  <div class="tab-panel" id="tab-homeowners">
-    <div class="properties-grid">
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Residence · Villa</span>
-          <div class="property-name">Cliffside Infinity Villa</div>
-          <div class="property-location">Santorini, Greece</div>
-          <div class="property-price">€4,750,000</div>
-          <div class="property-cta">View Property</div>
-        </div>
-      </div>
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Residence · Penthouse</span>
-          <div class="property-name">Athenian Sky Penthouse</div>
-          <div class="property-location">Kolonaki, Athens</div>
-          <div class="property-price">€2,100,000</div>
-          <div class="property-cta">View Property</div>
-        </div>
-      </div>
-      <div class="property-card">
-        <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
-        <div class="property-overlay">
-          <span class="property-tag">Residence · Estate</span>
-          <div class="property-name">Riviera Private Estate</div>
-          <div class="property-location">Vouliagmeni, Athens</div>
-          <div class="property-price">€6,500,000</div>
-          <div class="property-cta">View Property</div>
-        </div>
-      </div>
+  <div class="search-filter-bar">
+    <div class="search-input-wrap">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="search-input" type="text" id="searchInput" placeholder="Search by name, location…" oninput="filterProperties()">
+    </div>
+    <select class="filter-select" id="filterLocation" onchange="filterProperties()">
+      <option value="">All Locations</option>
+      <option>Athens</option>
+      <option>Mykonos</option>
+      <option>Santorini</option>
+      <option>Vouliagmeni</option>
+      <option>Kolonaki</option>
+    </select>
+    <select class="filter-select" id="filterPrice" onchange="filterProperties()">
+      <option value="">Any Price</option>
+      <option value="0-2000000">Under €2M</option>
+      <option value="2000000-4000000">€2M – €4M</option>
+      <option value="4000000-999999999">€4M+</option>
+    </select>
+    <button class="clear-search-btn" onclick="clearSearch()">Clear</button>
+  </div>
+
+  <div class="properties-grid-section">
+    <div class="tab-panel active" id="tab-investors">
+      <div class="properties-grid" id="prop-investors-grid"></div>
+      <div class="no-results" id="investors-no-results" style="display:none;">No listings match your search.</div>
+    </div>
+    <div class="tab-panel" id="tab-homeowners">
+      <div class="properties-grid" id="prop-homeowners-grid"></div>
+      <div class="no-results" id="homeowners-no-results" style="display:none;">No listings match your search.</div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- FAQ -->
-<section id="faq">
-  <p class="section-label">Common Questions</p>
-  <h2 class="section-title">Frequently Asked</h2>
-  <div class="gold-line"></div>
-  <div class="faq-list">
-    <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">What areas do you specialize in?<div class="faq-icon"></div></button>
-      <div class="faq-answer">We specialize in premium residential and commercial properties across Greece's most sought-after locations — including Athens (Kolonaki, Vouliagmeni, Glyfada), Mykonos, Santorini, Corfu, and Crete. We also source off-market international listings for qualified clients.</div>
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PAGE: PROPERTY DETAIL                          -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="page" id="page-property-detail">
+  <button class="back-btn" id="backBtn" onclick="goBackToProperties()">← Back to Properties</button>
+
+  <div class="property-detail-hero">
+    <div class="property-detail-placeholder" id="detail-placeholder">
+      <div class="property-detail-placeholder-hs">HS</div>
     </div>
-    <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">Do you work with international buyers?<div class="faq-icon"></div></button>
-      <div class="faq-answer">Absolutely. We serve clients from across Europe, the Middle East, and beyond. Our multilingual team is experienced in guiding non-EU buyers through Greece's Golden Visa programme, legal requirements, and cross-border transactions with full discretion.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">What is the process for purchasing a property?<div class="faq-icon"></div></button>
-      <div class="faq-answer">After an initial consultation to understand your needs, we curate a personalised selection of properties. We handle viewings, due diligence, legal coordination with a trusted notary network, and negotiation — ensuring a seamless experience from first viewing to final key handover.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">Do you offer investment advisory services?<div class="faq-icon"></div></button>
-      <div class="faq-answer">Yes. We provide detailed market analysis, rental yield projections, and portfolio strategies for investors. Whether you are acquiring a single asset or building a property portfolio in Greece, we offer end-to-end advisory from acquisition through asset management.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">Are there off-market properties available?<div class="faq-icon"></div></button>
-      <div class="faq-answer">Yes. Many of our finest listings are never publicly advertised. These exclusive off-market opportunities are shared privately with qualified clients. We invite you to register your search criteria with us to gain access to our full off-market portfolio.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">What are your fees?<div class="faq-icon"></div></button>
-      <div class="faq-answer">Our fees are transparent and competitive, typically structured as a percentage of the agreed purchase price. We offer a complimentary initial consultation with no obligation. All fees are clearly outlined before any engagement — we believe in complete transparency.</div>
+    <img class="property-detail-img" id="detail-img" src="" alt="" style="display:none;">
+    <div class="property-detail-overlay"></div>
+    <div class="property-detail-info">
+      <div class="property-detail-tag" id="detail-tag"></div>
+      <div class="property-detail-name" id="detail-name"></div>
+      <div class="property-detail-location" id="detail-location"></div>
     </div>
   </div>
-</section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <p class="section-label">Get In Touch</p>
-  <h2 class="section-title">Contact Us</h2>
-  <div class="gold-line"></div>
-  <div class="contact-grid">
+  <div class="property-detail-body">
     <div>
-      <div class="contact-info-item">
-        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.22 5.13 2 2 0 012.18 3h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 10.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
-        <div><div class="contact-info-label">Telephone</div><div class="contact-info-value">+30 210 000 0000</div></div>
+      <p class="section-label">About This Property</p>
+      <div class="gold-line"></div>
+      <p class="property-detail-desc" id="detail-desc"></p>
+    </div>
+    <div class="property-detail-sidebar">
+      <div class="property-detail-price" id="detail-price"></div>
+      <div class="property-detail-price-label">Asking Price</div>
+      <ul class="property-detail-specs" id="detail-specs"></ul>
+      <button class="property-enquire-btn" onclick="showPage(\'contact\')"><span>Enquire About This Property</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PAGE: FAQ                                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="page" id="page-faq">
+  <section>
+    <p class="section-label">Common Questions</p>
+    <h2 class="section-title">Frequently Asked</h2>
+    <div class="gold-line"></div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">What areas do you specialise in?<div class="faq-icon"></div></button>
+        <div class="faq-answer">We specialise in premium residential and commercial properties across Greece\'s most sought-after locations — including Athens (Kolonaki, Vouliagmeni, Glyfada), Mykonos, Santorini, Corfu, and Crete. We also source off-market international listings for qualified clients.</div>
       </div>
-      <div class="contact-info-item">
-        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-        <div><div class="contact-info-label">Email</div><div class="contact-info-value">info@hsluxuryproperties.com</div></div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Do you work with international buyers?<div class="faq-icon"></div></button>
+        <div class="faq-answer">Absolutely. We serve clients from across Europe, the Middle East, and beyond. Our multilingual team is experienced in guiding non-EU buyers through Greece\'s Golden Visa programme, legal requirements, and cross-border transactions with full discretion.</div>
       </div>
-      <div class="contact-info-item">
-        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <div><div class="contact-info-label">Office</div><div class="contact-info-value">Athens, Greece</div></div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">What is the process for purchasing a property?<div class="faq-icon"></div></button>
+        <div class="faq-answer">After an initial consultation to understand your needs, we curate a personalised selection of properties. We handle viewings, due diligence, legal coordination with a trusted notary network, and negotiation — ensuring a seamless experience from first viewing to final key handover.</div>
       </div>
-      <div class="contact-info-item">
-        <div class="contact-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-        <div><div class="contact-info-label">Hours</div><div class="contact-info-value">Mon – Fri · 9:00 – 18:00</div></div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Do you offer investment advisory services?<div class="faq-icon"></div></button>
+        <div class="faq-answer">Yes. We provide detailed market analysis, rental yield projections, and portfolio strategies for investors. Whether you are acquiring a single asset or building a property portfolio in Greece, we offer end-to-end advisory from acquisition through asset management.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Are there off-market properties available?<div class="faq-icon"></div></button>
+        <div class="faq-answer">Yes. Many of our finest listings are never publicly advertised. These exclusive off-market opportunities are shared privately with qualified clients. We invite you to register your search criteria with us to gain access to our full off-market portfolio.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">What are your fees?<div class="faq-icon"></div></button>
+        <div class="faq-answer">Our fees are transparent and competitive, typically structured as a percentage of the agreed purchase price. We offer a complimentary initial consultation with no obligation. All fees are clearly outlined before any engagement — we believe in complete transparency.</div>
       </div>
     </div>
-    <form class="contact-form" onsubmit="handleSubmit(event)">
-      <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" type="text" placeholder="Your name" required></div>
-      <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" type="email" placeholder="your@email.com" required></div>
-      <div class="form-group">
-        <label class="form-label">I am interested in</label>
-        <select class="form-select form-input">
-          <option value="">Select an option</option>
-          <option>Buying a property</option>
-          <option>Investment opportunities</option>
-          <option>Selling my property</option>
-          <option>General enquiry</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Tell us about your requirements…"></textarea></div>
-      <button type="submit" class="submit-btn"><span>Send Enquiry</span></button>
-    </form>
-  </div>
-</section>
+  </section>
+</div>
 
-<!-- FOOTER -->
-<footer>
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PAGE: CONTACT                                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <section>
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Contact Us</h2>
+    <div class="gold-line"></div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-info-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.22 5.13 2 2 0 012.18 3h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 10.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+          <div><div class="contact-info-label">Telephone</div><div class="contact-info-value">+30 210 000 0000</div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="contact-info-label">Email</div><div class="contact-info-value">info@hsluxuryproperties.com</div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="contact-info-label">Office</div><div class="contact-info-value">Athens, Greece</div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div><div class="contact-info-label">Hours</div><div class="contact-info-value">Mon – Fri · 9:00 – 18:00</div></div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" type="text" placeholder="Your name" required></div>
+        <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" type="email" placeholder="your@email.com" required></div>
+        <div class="form-group">
+          <label class="form-label">I am interested in</label>
+          <select class="form-select-contact form-input">
+            <option value="">Select an option</option>
+            <option>Buying a property</option>
+            <option>Investment opportunities</option>
+            <option>Selling my property</option>
+            <option>General enquiry</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Tell us about your requirements…"></textarea></div>
+        <button type="submit" class="submit-btn"><span>Send Enquiry</span></button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PAGE: ADMIN                                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="page" id="page-admin">
+  <section style="padding-bottom:20px;">
+    <p class="section-label">Restricted Area</p>
+    <h2 class="section-title">Admin Panel</h2>
+    <div class="gold-line"></div>
+  </section>
+
+  <div class="admin-panel" id="adminPanel">
+    <button class="admin-logout-btn" onclick="adminLogout()">Log Out</button>
+    <p class="section-label" style="margin-bottom:4px;">Manage Listings</p>
+    <p style="font-size:13px;color:var(--text-muted);">Add, view, and remove property listings from your portfolio.</p>
+
+    <table class="admin-listings-table" id="adminTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Price</th>
+          <th>Type</th>
+          <th>Category</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="adminTableBody"></tbody>
+    </table>
+
+    <div class="admin-add-form">
+      <p class="section-label" style="margin-bottom:4px;">Add New Listing</p>
+      <p style="font-size:13px;color:var(--text-muted);">Complete the form below to add a new property to the portfolio.</p>
+      <div class="admin-form-grid">
+        <div>
+          <label class="admin-label">Property Name *</label>
+          <input class="admin-input" type="text" id="af-name" placeholder="e.g. Cliffside Infinity Villa">
+        </div>
+        <div>
+          <label class="admin-label">Location *</label>
+          <input class="admin-input" type="text" id="af-location" placeholder="e.g. Santorini, Greece">
+        </div>
+        <div>
+          <label class="admin-label">Price *</label>
+          <input class="admin-input" type="text" id="af-price" placeholder="e.g. €4,750,000">
+        </div>
+        <div>
+          <label class="admin-label">Property Type *</label>
+          <input class="admin-input" type="text" id="af-type" placeholder="e.g. Villa, Penthouse, Land…">
+        </div>
+        <div>
+          <label class="admin-label">Tag / Label</label>
+          <input class="admin-input" type="text" id="af-tag" placeholder="e.g. Residence · Villa">
+        </div>
+        <div>
+          <label class="admin-label">Category *</label>
+          <select class="admin-select" id="af-category">
+            <option value="investors">For Investors</option>
+            <option value="homeowners">For Homeowners</option>
+          </select>
+        </div>
+        <div class="span-2">
+          <label class="admin-label">Description</label>
+          <textarea class="admin-textarea" id="af-desc" placeholder="Describe the property in detail…"></textarea>
+        </div>
+        <div>
+          <label class="admin-label">Bedrooms</label>
+          <input class="admin-input" type="text" id="af-beds" placeholder="e.g. 5">
+        </div>
+        <div>
+          <label class="admin-label">Bathrooms</label>
+          <input class="admin-input" type="text" id="af-baths" placeholder="e.g. 4">
+        </div>
+        <div>
+          <label class="admin-label">Area (sqm)</label>
+          <input class="admin-input" type="text" id="af-area" placeholder="e.g. 420">
+        </div>
+        <div>
+          <label class="admin-label">Year Built</label>
+          <input class="admin-input" type="text" id="af-year" placeholder="e.g. 2019">
+        </div>
+      </div>
+      <button class="admin-submit-btn" onclick="addListing()">Add Listing to Portfolio</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- FOOTER (shared)                               -->
+<!-- ═══════════════════════════════════════════════ -->
+<footer id="site-footer">
   <div class="footer-grid">
     <div>
       <div class="footer-brand-name">Haigh Spanoudakis</div>
       <div class="footer-brand-tag">Real Estate · Luxury Properties</div>
-      <p class="footer-desc">Connecting discerning clients with the world's most exceptional properties. Discretion, expertise, and extraordinary results.</p>
+      <p class="footer-desc">Connecting discerning clients with the world\'s most exceptional properties. Discretion, expertise, and extraordinary results.</p>
     </div>
     <div>
       <div class="footer-heading">Navigation</div>
       <ul class="footer-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#properties">Properties</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contact">Contact Us</a></li>
+        <li><a onclick="showPage(\'home\')">Home</a></li>
+        <li><a onclick="showPage(\'properties\')">Properties</a></li>
+        <li><a onclick="showPage(\'faq\')">FAQ</a></li>
+        <li><a onclick="showPage(\'contact\')">Contact Us</a></li>
       </ul>
     </div>
     <div>
@@ -891,34 +1497,321 @@
 </footer>
 
 <script>
-  function switchTab(tab, btn) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    btn.classList.add('active');
-  }
+// ═══════════════════════════════════════════════════════
+//  DATA — listings stored in localStorage
+// ═══════════════════════════════════════════════════════
 
-  function toggleFaq(btn) {
-    const item = btn.parentElement;
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!wasOpen) item.classList.add('open');
-  }
+const ADMIN_PASSWORD = "HS2025admin"; // Change this to your desired password
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('.submit-btn span');
-    btn.textContent = 'Message Sent ✓';
-    setTimeout(() => btn.textContent = 'Send Enquiry', 3000);
-  }
+const DEFAULT_LISTINGS = [
+  { id:1, name:"Prime Commercial Block",      location:"Athens, Greece",      price:"€2,400,000", priceNum:2400000, type:"Commercial", tag:"Investment · High Yield",  category:"investors",  desc:"A premium commercial block positioned in the heart of Athens, offering high footfall and strong rental yields. The building spans six floors with modern fit-out, long-term tenants, and exceptional capital appreciation potential in one of Europe\'s fastest recovering real-estate markets.", beds:"", baths:"", area:"1,200", year:"2008" },
+  { id:2, name:"Boutique Apartment Portfolio", location:"Mykonos, Greece",     price:"€1,850,000", priceNum:1850000, type:"Portfolio",   tag:"Investment · Rental Income", category:"investors",  desc:"A curated collection of four boutique apartments steps from Mykonos Town. All units are fully furnished and benefit from a consistent short-term rental income stream throughout the summer season. Excellent management infrastructure already in place.", beds:"4×2", baths:"4×1", area:"320", year:"2016" },
+  { id:3, name:"Seafront Development Land",    location:"Santorini, Greece",   price:"€3,200,000", priceNum:3200000, type:"Land",        tag:"Investment · Development",  category:"investors",  desc:"An exceptional parcel of seafront land on Santorini\'s southern coast, zoned for tourist development. With panoramic caldera views and planning guidance available, this represents a once-in-a-generation opportunity to create a signature luxury resort or private residence.", beds:"", baths:"", area:"4,800", year:"" },
+  { id:4, name:"Cliffside Infinity Villa",     location:"Santorini, Greece",   price:"€4,750,000", priceNum:4750000, type:"Villa",       tag:"Residence · Villa",          category:"homeowners", desc:"Perched on the iconic Santorini caldera, this architectural masterpiece features an infinity pool that merges seamlessly with the Aegean horizon. Five en-suite bedrooms, a private wine cellar, and a helipad make this property the pinnacle of Cycladic luxury living.", beds:"5", baths:"5", area:"680", year:"2021" },
+  { id:5, name:"Athenian Sky Penthouse",       location:"Kolonaki, Athens",    price:"€2,100,000", priceNum:2100000, type:"Penthouse",   tag:"Residence · Penthouse",       category:"homeowners", desc:"Occupying the entire top floor of a prestigious Kolonaki building, this 320sqm penthouse offers 360-degree views of Athens including the Acropolis. Bespoke Italian interiors, a rooftop terrace with private pool, and concierge services define this urban sanctuary.", beds:"3", baths:"3", area:"320", year:"2020" },
+  { id:6, name:"Riviera Private Estate",       location:"Vouliagmeni, Athens", price:"€6,500,000", priceNum:6500000, type:"Estate",      tag:"Residence · Estate",          category:"homeowners", desc:"Set within a walled private estate on the Athens Riviera, this magnificent residence extends across 1,200sqm of interior space across two levels. Direct sea access, a private jetty, tennis court, and guest house make this a compound of rare prestige.", beds:"7", baths:"6", area:"1,200", year:"2015" }
+];
 
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
+function getListings() {
+  const stored = localStorage.getItem(\'hs_listings\');
+  if (stored) return JSON.parse(stored);
+  localStorage.setItem(\'hs_listings\', JSON.stringify(DEFAULT_LISTINGS));
+  return DEFAULT_LISTINGS;
+}
+
+function saveListings(arr) {
+  localStorage.setItem(\'hs_listings\', JSON.stringify(arr));
+}
+
+// ═══════════════════════════════════════════════════════
+//  SPA NAVIGATION
+// ═══════════════════════════════════════════════════════
+
+let currentPage = \'home\';
+let previousPropertiesPage = false;
+
+function showPage(page) {
+  if (page === \'admin\') {
+    requestAdminAccess();
+    return;
+  }
+  document.querySelectorAll(\'.page\').forEach(p => p.classList.remove(\'active\'));
+  document.getElementById(\'page-\' + page).classList.add(\'active\');
+  document.querySelectorAll(\'.nav-links a[data-page]\').forEach(a => {
+    a.classList.toggle(\'active\', a.getAttribute(\'data-page\') === page);
   });
+  window.scrollTo({ top: 0, behavior: \'smooth\' });
+  currentPage = page;
+
+  if (page === \'home\') renderHomeGrids();
+  if (page === \'properties\') renderPropertiesGrids();
+  if (page === \'admin\' && isAdminAuthed()) renderAdminTable();
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER PROPERTY CARDS
+// ═══════════════════════════════════════════════════════
+
+function buildCard(listing, clickable) {
+  return `<div class="property-card" onclick="openListing(${listing.id})">
+    <div class="property-placeholder"><div class="placeholder-icon">HS</div></div>
+    <div class="property-overlay">
+      <span class="property-tag">${listing.tag}</span>
+      <div class="property-name">${listing.name}</div>
+      <div class="property-location">${listing.location}</div>
+      <div class="property-price">${listing.price}</div>
+      <button class="property-cta-btn">View Property</button>
+    </div>
+  </div>`;
+}
+
+function renderHomeGrids() {
+  const listings = getListings();
+  const investors = listings.filter(l => l.category === \'investors\').slice(0, 3);
+  const homeowners = listings.filter(l => l.category === \'homeowners\').slice(0, 3);
+  document.getElementById(\'home-investors-grid\').innerHTML = investors.map(l => buildCard(l)).join(\'\');
+  document.getElementById(\'home-homeowners-grid\').innerHTML = homeowners.map(l => buildCard(l)).join(\'\');
+}
+
+function renderPropertiesGrids() {
+  const listings = getListings();
+  const search = (document.getElementById(\'searchInput\')?.value || \'\').toLowerCase();
+  const loc = document.getElementById(\'filterLocation\')?.value || \'\';
+  const priceRange = document.getElementById(\'filterPrice\')?.value || \'\';
+
+  function matches(l) {
+    const nameMatch = l.name.toLowerCase().includes(search) || l.location.toLowerCase().includes(search) || l.tag.toLowerCase().includes(search);
+    const locMatch = !loc || l.location.toLowerCase().includes(loc.toLowerCase());
+    let priceMatch = true;
+    if (priceRange) {
+      const [min, max] = priceRange.split(\'-\').map(Number);
+      priceMatch = l.priceNum >= min && l.priceNum <= max;
+    }
+    return nameMatch && locMatch && priceMatch;
+  }
+
+  const investors = listings.filter(l => l.category === \'investors\' && matches(l));
+  const homeowners = listings.filter(l => l.category === \'homeowners\' && matches(l));
+
+  document.getElementById(\'prop-investors-grid\').innerHTML = investors.map(l => buildCard(l)).join(\'\');
+  document.getElementById(\'prop-homeowners-grid\').innerHTML = homeowners.map(l => buildCard(l)).join(\'\');
+
+  document.getElementById(\'investors-no-results\').style.display = investors.length ? \'none\' : \'block\';
+  document.getElementById(\'homeowners-no-results\').style.display = homeowners.length ? \'none\' : \'block\';
+}
+
+// ═══════════════════════════════════════════════════════
+//  PROPERTY DETAIL
+// ═══════════════════════════════════════════════════════
+
+function openListing(id) {
+  const listings = getListings();
+  const l = listings.find(x => x.id === id);
+  if (!l) return;
+
+  previousPropertiesPage = currentPage;
+
+  document.getElementById(\'detail-tag\').textContent = l.tag;
+  document.getElementById(\'detail-name\').textContent = l.name;
+  document.getElementById(\'detail-location\').textContent = l.location;
+  document.getElementById(\'detail-price\').textContent = l.price;
+  document.getElementById(\'detail-desc\').textContent = l.desc || \'Full details available upon request. Please contact our team for a private consultation and comprehensive property brief.\';
+
+  const specs = [];
+  if (l.type) specs.push([\'Type\', l.type]);
+  if (l.beds) specs.push([\'Bedrooms\', l.beds]);
+  if (l.baths) specs.push([\'Bathrooms\', l.baths]);
+  if (l.area) specs.push([\'Area\', l.area + \' sqm\']);
+  if (l.year) specs.push([\'Year Built\', l.year]);
+  specs.push([\'Location\', l.location]);
+
+  document.getElementById(\'detail-specs\').innerHTML = specs.map(([k,v]) =>
+    `<li><span>${k}</span><span>${v}</span></li>`
+  ).join(\'\');
+
+  document.getElementById(\'detail-img\').style.display = \'none\';
+  document.getElementById(\'detail-placeholder\').style.display = \'flex\';
+
+  document.querySelectorAll(\'.page\').forEach(p => p.classList.remove(\'active\'));
+  document.getElementById(\'page-property-detail\').classList.add(\'active\');
+  window.scrollTo({ top: 0, behavior: \'smooth\' });
+  currentPage = \'property-detail\';
+}
+
+function goBackToProperties() {
+  const back = previousPropertiesPage && previousPropertiesPage !== \'property-detail\' ? previousPropertiesPage : \'properties\';
+  showPage(back);
+}
+
+// ═══════════════════════════════════════════════════════
+//  SEARCH & FILTER
+// ═══════════════════════════════════════════════════════
+
+function filterProperties() {
+  renderPropertiesGrids();
+}
+
+function clearSearch() {
+  document.getElementById(\'searchInput\').value = \'\';
+  document.getElementById(\'filterLocation\').value = \'\';
+  document.getElementById(\'filterPrice\').value = \'\';
+  renderPropertiesGrids();
+}
+
+// ═══════════════════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════════════════
+
+function switchTab(tab, btn) {
+  document.querySelectorAll(\'.tab-panel\').forEach(p => p.classList.remove(\'active\'));
+  document.querySelectorAll(\'.tab-btn\').forEach(b => b.classList.remove(\'active\'));
+  document.getElementById(\'tab-\' + tab).classList.add(\'active\');
+  btn.classList.add(\'active\');
+}
+
+// ═══════════════════════════════════════════════════════
+//  FAQ
+// ═══════════════════════════════════════════════════════
+
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const wasOpen = item.classList.contains(\'open\');
+  document.querySelectorAll(\'.faq-item\').forEach(i => i.classList.remove(\'open\'));
+  if (!wasOpen) item.classList.add(\'open\');
+}
+
+// ═══════════════════════════════════════════════════════
+//  CONTACT
+// ═══════════════════════════════════════════════════════
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector(\'.submit-btn span\');
+  btn.textContent = \'Message Sent ✓\';
+  setTimeout(() => btn.textContent = \'Send Enquiry\', 3000);
+}
+
+// ═══════════════════════════════════════════════════════
+//  ADMIN AUTH
+// ═══════════════════════════════════════════════════════
+
+let _adminAuthed = false;
+
+function isAdminAuthed() { return _adminAuthed; }
+
+function requestAdminAccess() {
+  if (_adminAuthed) {
+    actuallyShowAdmin();
+    return;
+  }
+  document.getElementById(\'adminModal\').classList.add(\'open\');
+  document.getElementById(\'adminPwInput\').value = \'\';
+  document.getElementById(\'modalError\').style.display = \'none\';
+  setTimeout(() => document.getElementById(\'adminPwInput\').focus(), 100);
+}
+
+function verifyAdminPw() {
+  const pw = document.getElementById(\'adminPwInput\').value;
+  if (pw === ADMIN_PASSWORD) {
+    _adminAuthed = true;
+    document.getElementById(\'adminModal\').classList.remove(\'open\');
+    actuallyShowAdmin();
+  } else {
+    document.getElementById(\'modalError\').style.display = \'block\';
+    document.getElementById(\'adminPwInput\').value = \'\';
+    document.getElementById(\'adminPwInput\').focus();
+  }
+}
+
+function closeAdminModal() {
+  document.getElementById(\'adminModal\').classList.remove(\'open\');
+}
+
+function actuallyShowAdmin() {
+  document.querySelectorAll(\'.page\').forEach(p => p.classList.remove(\'active\'));
+  document.getElementById(\'page-admin\').classList.add(\'active\');
+  document.getElementById(\'adminPanel\').classList.add(\'visible\');
+  document.querySelectorAll(\'.nav-links a[data-page]\').forEach(a => {
+    a.classList.toggle(\'active\', a.getAttribute(\'data-page\') === \'admin\');
+  });
+  window.scrollTo({ top: 0, behavior: \'smooth\' });
+  currentPage = \'admin\';
+  renderAdminTable();
+}
+
+function adminLogout() {
+  _adminAuthed = false;
+  showPage(\'home\');
+}
+
+// ═══════════════════════════════════════════════════════
+//  ADMIN TABLE
+// ═══════════════════════════════════════════════════════
+
+function renderAdminTable() {
+  const listings = getListings();
+  const tbody = document.getElementById(\'adminTableBody\');
+  tbody.innerHTML = listings.map(l => `
+    <tr>
+      <td>${l.name}</td>
+      <td>${l.location}</td>
+      <td style="color:var(--gold-light)">${l.price}</td>
+      <td>${l.type || \'—\'}</td>
+      <td><span class="badge badge-${l.category === \'investors\' ? \'investor\' : \'homeowner\'}">${l.category === \'investors\' ? \'Investors\' : \'Homeowners\'}</span></td>
+      <td><button class="admin-delete-btn" onclick="deleteListing(${l.id})">Remove</button></td>
+    </tr>
+  `).join(\'\');
+}
+
+function deleteListing(id) {
+  if (!confirm(\'Remove this listing from the portfolio?\')) return;
+  const listings = getListings().filter(l => l.id !== id);
+  saveListings(listings);
+  renderAdminTable();
+}
+
+function addListing() {
+  const name = document.getElementById(\'af-name\').value.trim();
+  const location = document.getElementById(\'af-location\').value.trim();
+  const price = document.getElementById(\'af-price\').value.trim();
+  const type = document.getElementById(\'af-type\').value.trim();
+  const tag = document.getElementById(\'af-tag\').value.trim();
+  const category = document.getElementById(\'af-category\').value;
+  const desc = document.getElementById(\'af-desc\').value.trim();
+  const beds = document.getElementById(\'af-beds\').value.trim();
+  const baths = document.getElementById(\'af-baths\').value.trim();
+  const area = document.getElementById(\'af-area\').value.trim();
+  const year = document.getElementById(\'af-year\').value.trim();
+
+  if (!name || !location || !price) {
+    alert(\'Please fill in at least: Name, Location, and Price.\');
+    return;
+  }
+
+  const priceNum = parseInt(price.replace(/[^0-9]/g, \'\')) || 0;
+  const listings = getListings();
+  const newId = Math.max(...listings.map(l => l.id), 0) + 1;
+
+  listings.push({ id:newId, name, location, price, priceNum,
+    type: type || \'Property\',
+    tag: tag || (category === \'investors\' ? \'Investment · Property\' : \'Residence · Property\'),
+    category, desc, beds, baths, area, year });
+
+  saveListings(listings);
+  renderAdminTable();
+
+  // Clear form
+  [\'af-name\',\'af-location\',\'af-price\',\'af-type\',\'af-tag\',\'af-desc\',\'af-beds\',\'af-baths\',\'af-area\',\'af-year\'].forEach(id => document.getElementById(id).value = \'\');
+
+  alert(`"${name}" has been added to the portfolio.`);
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+
+renderHomeGrids();
 </script>
 </body>
-</html>
+</html>'''
+
